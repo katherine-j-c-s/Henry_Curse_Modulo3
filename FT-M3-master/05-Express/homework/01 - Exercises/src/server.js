@@ -10,7 +10,7 @@ const server = express();
 
 server.use(express.json());
 
-server.get("/posts", (req,res)=>{
+server.post("/posts", (req,res)=>{
     const { author, title, contents} = req.body
     if (!author || !title || !contents) {
         return res
@@ -28,7 +28,7 @@ server.get("/posts", (req,res)=>{
     publications.push(publication)
     res.status(STATUS_OK).json(publication)
 })
-
+// GET ruta /posts?author=author?title=title
 server.get('/posts', (req,res)=>{
     const { author, title } = req.query
     if (author && title) {
@@ -37,14 +37,16 @@ server.get('/posts', (req,res)=>{
         })
         filterPublications.length > 0 
             ? res.status(STATUS_OK).json(filterPublications)
-            : res.status(STATUS_ERROR).json({error: "No existe ninguna publicación con dicho título y autor indicado"})
+            : res.status(STATUS_ERROR).json({
+                error: "No existe ninguna publicación con dicho título y autor indicado"
+            })
     }else {
         res
         .status(STATUS_OK)
         .json({mesage:"all publicacions",publication: publications})
     }
 })
-
+// GET ruta /posts/:author
 server.get("/posts/:author", (req,res)=>{
     const { author } = req.params
     if (author) {
@@ -53,14 +55,16 @@ server.get("/posts/:author", (req,res)=>{
         })
         filterPublications.length > 0 
             ? res.status(STATUS_OK).json(filterPublications)
-            : res.status(STATUS_ERROR).json({error: "No existe ninguna publicación del autor indicado"})
+            : res
+            .status(STATUS_ERROR)
+            .json({error: "No existe ninguna publicación del autor indicado"})
     }else {
         res
         .status(STATUS_ERROR)
         .json({mesage:"autor not validated"})
     }
 })
-
+// PUT ruta /posts/:id
 server.put('/posts/:id', (req,res)=>{
     const { id } = req.params
     const { title, contents } = req.body
@@ -71,12 +75,13 @@ server.put('/posts/:id', (req,res)=>{
             error: "No se recibieron los parámetros necesarios para modificar la publicación"
         })
     }
-    const publicId = publications.fin(e=> e.id === Number(id))
+    let publicId = publications.find(e=> e.id === Number(id))
     if (!publicId) {
-        res.status(STATUS_ERROR).json({error: "No se recibió el id correcto necesario para modificar la publicación"})
+        return res.status(STATUS_ERROR).json({
+            error: "No se recibió el id correcto necesario para modificar la publicación"
+        })
     }
     publicId = {...publicId, title , contents}
-
     publications.forEach((e,i)=>{
         if(e.id === Number(id)){
             publications[i] = publicId
