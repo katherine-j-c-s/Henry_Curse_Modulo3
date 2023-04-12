@@ -1,5 +1,4 @@
-require('dotenv').config
-
+require('dotenv').config()
 
 const DB_EMAIL = process.env.EMAIL
 const DB_PASSWORD = process.env.PASSWORD
@@ -14,7 +13,7 @@ function login(req,res){
         if (!password || !email) {
             res.
             status(500).
-            json({message:"there is'nt a password or email"})
+            json({ message:"there isn't a password or email" })
         }
         if(password=== DB_PASSWORD && email === DB_EMAIL){
             res.status(STATUS_OK).json({ access:true })

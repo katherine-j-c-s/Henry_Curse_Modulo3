@@ -1,4 +1,4 @@
-require('dotenv').config
+require('dotenv').config()
 
 const STATUS_OK = 200
 const STATUS_ERROR = 404
@@ -12,7 +12,7 @@ function postFav(req,res){
         if (!id || !name || !image) {
             return res
             .status(STATUS_ERROR)
-            .json({message:"character not found"})
+            .json({ message:"character not found" })
         }  
         const character = { 
             id,
@@ -27,7 +27,7 @@ function postFav(req,res){
         res.status(STATUS_OK).json(myFavorites)
 
     } catch (error) {
-        res.status(STATUS_ERROR).json({message:error})
+        res.status(STATUS_ERROR).json({ message:error })
     }
 }
 
@@ -35,13 +35,13 @@ function deleteFav(req,res){
    const {id} = req.params 
    try {
         if (!id) {
-             res.status(STATUS_ERROR).json({message:"id not found"})
+             res.status(STATUS_ERROR).json({ message:"id not found" })
         }
         const newFav = myFavorites.filter(ch => ch.id !== Number(id))
         myFavorites= newFav
         res.status(STATUS_OK).json(myFavorites)
    } catch (error) {
-    res.status(STATUS_ERROR).json({message:error})
+    res.status(STATUS_ERROR).json({ message:error })
    }
   
 }

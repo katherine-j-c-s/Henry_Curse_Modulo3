@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const {getCharById} = require('./../controlers/characters')
+const {getCharById,getAllChar} = require('./../controlers/characters')
 
+router.get("/all", getAllChar)
 router.get("/:id", getCharById)
 router.get("/detail/:id", getCharById)
 

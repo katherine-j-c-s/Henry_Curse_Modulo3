@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const character = require('./characters')
+const characters = require('./characters')
 const favorites = require('./favorites')
 const login = require('./login')
 
-router.use("/character", character)
+router.use("/character", characters)
 router.use("/favorite", favorites)
 router.use("/login", login)
 
