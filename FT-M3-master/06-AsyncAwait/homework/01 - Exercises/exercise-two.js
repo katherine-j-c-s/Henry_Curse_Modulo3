@@ -30,9 +30,15 @@ async function problemA() {
 
   // async await version
   // Tu código acá:
-  exerciseUtils.blue( await exerciseUtils.promisifiedReadFile("poem-two/stanza-01.txt"))
-  exerciseUtils.blue( await exerciseUtils.promisifiedReadFile("poem-two/stanza-02.txt"))
-  exerciseUtils.blue("done")
+  
+  let p1 = exerciseUtils.promisifiedReadFile("poem-two/stanza-01.txt");
+  let p2 = exerciseUtils.promisifiedReadFile("poem-two/stanza-02.txt");
+  const stanzas = await Promise.all([p1,p2])
+  
+  stanzas.forEach((s) =>{ 
+    return exerciseUtils.blue(s)
+  })
+  console.log("done")
 }
 
 async function problemB() {
@@ -49,10 +55,15 @@ async function problemB() {
 
   // async await version
   // Tu código acá:
-  let promises = filenames.map(file=> exerciseUtils.promisifiedReadFile(file))
-  let allPromises = await Promise.all(promises);
-  exerciseUtils.blue(allPromises)
-  exerciseUtils.blue("done")
+
+  let promises = filenames.map((p) => exerciseUtils.promisifiedReadFile(p))
+  const stanzas = await Promise.all(promises)
+  
+  stanzas.forEach((s) => {
+    return exerciseUtils.blue(s)
+  })
+  console.log("done")
+
 }
 
 async function problemC() {
@@ -69,9 +80,11 @@ async function problemC() {
 
   // async await version
   // Tu código acá:
-  let promises = filenames.forEach(file=> exerciseUtils.promisifiedReadFile(file))
-  let allPromises = await Promise.all(promises);
-  exerciseUtils.blue(allPromises)
+  let promises = filenames.map((p) => exerciseUtils.promisifiedReadFile(p))
+  promises.forEach(async (promesa)=> {
+    const value = await promesa
+    exerciseUtils.blue(value)
+  })
   exerciseUtils.blue("done")
 }
 
@@ -92,8 +105,17 @@ async function problemD() {
 
   // async await version
   // Tu código acá:
-  let promises = filenames.forEach(file=> exerciseUtils.promisifiedReadFile(file))
-  let allPromises = await Promise.all(promises);
-  exerciseUtils.blue(allPromises)
-  exerciseUtils.blue("done")
+  try {
+    let promises = filenames.map((p) => exerciseUtils.promisifiedReadFile(p))
+    const stanzas = await Promise.all(promises)
+    stanzas.forEach((s)=> {
+      exerciseUtils.blue(s)
+    })
+  } catch (error) {
+    exerciseUtils.magenta(new Error(error))
+  }finally{
+    console.log("done")
+  }
+  
+  
 }
