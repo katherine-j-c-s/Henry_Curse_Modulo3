@@ -21,15 +21,18 @@ args.forEach(function (arg) {
 
 async function problemA() {
   // callback version
-  exerciseUtils.readFile("poem-one/stanza-01.txt", function (err, stanza) {
-    exerciseUtils.blue(stanza);
-  });
-  exerciseUtils.readFile("poem-one/stanza-02.txt", function (err, stanza) {
-    exerciseUtils.blue(stanza);
-  });
+  // exerciseUtils.readFile("poem-one/stanza-01.txt", function (err, stanza) {
+  //   exerciseUtils.blue(stanza);
+  // });
+  // exerciseUtils.readFile("poem-one/stanza-02.txt", function (err, stanza) {
+  //   exerciseUtils.blue(stanza);
+  // });
 
   // async await version
   // Tu código acá:
+  exerciseUtils.blue( await exerciseUtils.promisifiedReadFile("poem-two/stanza-01.txt"))
+  exerciseUtils.blue( await exerciseUtils.promisifiedReadFile("poem-two/stanza-02.txt"))
+  exerciseUtils.blue("done")
 }
 
 async function problemB() {
@@ -38,14 +41,18 @@ async function problemB() {
   });
 
   // callback version
-  filenames.forEach((filename) => {
-    exerciseUtils.readFile(filename, function (err, stanza) {
-      exerciseUtils.blue(stanza);
-    });
-  });
+  // filenames.forEach((filename) => {
+  //   exerciseUtils.readFile(filename, function (err, stanza) {
+  //     exerciseUtils.blue(stanza);
+  //   });
+  // });
 
   // async await version
   // Tu código acá:
+  let promises = filenames.map(file=> exerciseUtils.promisifiedReadFile(file))
+  let allPromises = await Promise.all(promises);
+  exerciseUtils.blue(allPromises)
+  exerciseUtils.blue("done")
 }
 
 async function problemC() {
@@ -54,14 +61,18 @@ async function problemC() {
   });
 
   // callback version
-  filenames.forEach((filename) => {
-    exerciseUtils.readFile(filename, function (err, stanza) {
-      exerciseUtils.blue(stanza);
-    });
-  });
+  // filenames.forEach((filename) => {
+  //   exerciseUtils.readFile(filename, function (err, stanza) {
+  //     exerciseUtils.blue(stanza);
+  //   });
+  // });
 
   // async await version
   // Tu código acá:
+  let promises = filenames.forEach(file=> exerciseUtils.promisifiedReadFile(file))
+  let allPromises = await Promise.all(promises);
+  exerciseUtils.blue(allPromises)
+  exerciseUtils.blue("done")
 }
 
 async function problemD() {
@@ -72,13 +83,17 @@ async function problemD() {
   filenames[randIdx] = "wrong-file-name-" + (randIdx + 1) + ".txt";
 
   // callback version
-  filenames.forEach((filename) => {
-    exerciseUtils.readFile(filename, function (err, stanza) {
-      exerciseUtils.blue(stanza);
-      if (err) exerciseUtils.magenta(new Error(err));
-    });
-  });
+  // filenames.forEach((filename) => {
+  //   exerciseUtils.readFile(filename, function (err, stanza) {
+  //     exerciseUtils.blue(stanza);
+  //     if (err) exerciseUtils.magenta(new Error(err));
+  //   });
+  // });
 
   // async await version
   // Tu código acá:
+  let promises = filenames.forEach(file=> exerciseUtils.promisifiedReadFile(file))
+  let allPromises = await Promise.all(promises);
+  exerciseUtils.blue(allPromises)
+  exerciseUtils.blue("done")
 }
